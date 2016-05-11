@@ -42,10 +42,11 @@
                 size: party.size,
                 name: party.name
             };
+             
              fireTextMessages.push(newTextMessage);
              party.notified = true;
              vm.parties.$save(party);
-        
+         }
         
     }
 })();
