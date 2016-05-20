@@ -11,17 +11,19 @@
         var vm = this;
         var firebaseReference = new Firebase('https://sweltering-inferno-5093.firebaseio.com');
         var firebaseAuthObject = $firebaseAuth(firebaseReference);
+        
         vm.user = {
             email: '',
             password: ''
         };
-    
-    vm.register = register;
+        
+         vm.register = register;
+         vm.login = login;
         
         function register(user) {
             return firebaseAuthObject.$createUser(user)
             .then(function() {
-                vm.login(user);
+               vm.login(user);
             })
             .catch(function(error) {
                 console.log(error);
