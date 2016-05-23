@@ -5,24 +5,18 @@
     .module('app.waitList')
     .controller('WaitListController', WaitListController);
     
-    WaitListController.$inject = ['$firebaseArray'];
+    //WaitListController.$inject = ['firebaseDataService', 'partyService'];
     
-    function WaitListController($firebaseArray) {
+    WaitListController.$inject = ['textMessageService', 'partyService'];
+    
+    function WaitListController(firebaseDataService, partyService) {
         var vm = this;
         
-        var fireParties = new Firebase('https://sweltering-inferno-5093.firebaseio.com/parties');
-        var fireTextMessages = new Firebase('https://sweltering-inferno-5093.firebaseio.com/textMessages');
-       
-        function Party() {
-            this.name = '';
-            this.phone = '';
-            this.size = '';
-            this.done = false;
-            this.notified = false;
-        }
         
-         vm.newParty = new Party();
-        vm.parties = $firebaseArray(fireParties);
+        
+         vm.newParty = new partyService.Party();
+        vm.parties = partyService.parties;
+       
         vm.addParty = addParty;
        vm.removeParty = removeParty;
         vm.sendTextMessage = sendTextMessage;
@@ -30,7 +24,7 @@
                      
         function addParty() {
             vm.parties.$add(vm.newParty);
-            vm.newParty = new Party();
+            vm.newParty = new partyService.Party();
         }
         
         function removeParty(party) {
@@ -38,15 +32,8 @@
         }
         
          function sendTextMessage(party) {
-            var newTextMessage =  {
-                phoneNumber: party.phone,
-                size: party.size,
-                name: party.name
-            };
-             
-             fireTextMessages.push(newTextMessage);
-             party.notified = true;
-             vm.parties.$save(party);
+             textMessageService.sendTextmessage(party, vm.parties);
+
          }
         
         function toggleDone(party) {

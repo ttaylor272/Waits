@@ -5,12 +5,10 @@
     .module('app.auth')
     .controller('AuthController', AuthController);
     
-    AuthController.$inject = ['$firebaseAuth'];
+    AuthController.$inject = ['$location',  'authService'];
     
-    function AuthController($firebaseAuth) {
+    function AuthController($location, authService) {
         var vm = this;
-        var firebaseReference = new Firebase('https://sweltering-inferno-5093.firebaseio.com');
-        var firebaseAuthObject = $firebaseAuth(firebaseReference);
         
         vm.user = {
             email: '',
@@ -19,11 +17,12 @@
         
          vm.register = register;
          vm.login = login;
+        vm.logout = logout;
         
         function register(user) {
-            return firebaseAuthObject.$createUser(user)
+            return authService.register(user)
             .then(function() {
-               vm.login(user);
+             return  vm.login(user);
             })
             .catch(function(error) {
                 console.log(error);
@@ -33,15 +32,20 @@
         }
         
         function login(user) {
-            return firebaseAuthObject.$authWithPassword(user)
+            return authService.login(user)
         .then(function(loggedInUser){
                 console.log(loggedInUser);
+                $location.path('/waitlist');
             })
             .catch(function(error) {
                 console.log(error);
             });
                   
-                
+        }
+        
+        function logout() {
+            authService.logout()
+            $location.path('/');
         }
     }
     

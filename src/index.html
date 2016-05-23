@@ -12,7 +12,7 @@
     
     </head>
     <body> 
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav ng-controller="AuthController as vm" class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -50,6 +50,17 @@
         <script src="app/auth/auth.module.js"></script>
         <script src="app/auth/config.route.js"></script>
         <script src="app/auth/auth.controller.js"></script>
+        <script src="app/auth/auth.service.js"></script>
+
+       
+         <!--core module-->   
+        <script src="app/core/core.module.js"></script>
+        <script src="app/core/constants.js"></script>
+        <script src="app/core/firebaseData.service.js"></script>
+        <script src="app/core/party.service.js"></script>
+        <script src="app/core/textMessage.service.js"></script>
+      
+      
        
       
        
