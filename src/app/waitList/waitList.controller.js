@@ -5,17 +5,17 @@
     .module('app.waitList')
     .controller('WaitListController', WaitListController);
     
-    //WaitListController.$inject = ['firebaseDataService', 'partyService'];
+     
+    WaitListController.$inject = ['partyService', 'textMessageService', 'user'];
     
-    WaitListController.$inject = ['textMessageService', 'partyService'];
-    
-    function WaitListController(firebaseDataService, partyService) {
+    function WaitListController(partyService,textMessageService, user) {
         var vm = this;
         
-        
+        //Log user to the console
         
          vm.newParty = new partyService.Party();
-        vm.parties = partyService.parties;
+       // vm.parties = partyService.parties;
+        vm.parties = partyService.getPartiesByUser(user.uid);
        
         vm.addParty = addParty;
        vm.removeParty = removeParty;

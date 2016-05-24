@@ -8,13 +8,9 @@
   partyService.$inject = ['$firebaseArray', 'firebaseDataService'];
 
   function partyService($firebaseArray, firebaseDataService) {
-
-    var parties = null;
-    
-    var service = {
+      var service = {
       Party: Party,
-      getPartiesByUser: getPartiesByUser,
-      reset: reset
+      getPartiesByUser: getPartiesByUser 
     };
 
     return service;
@@ -28,20 +24,15 @@
       this.done = false;
       this.notified = false;
     }
-
-    function getPartiesByUser(uid) {
-      if (!parties) {
-        parties = $firebaseArray(firebaseDataService.users.child(uid).child('parties'));
+      
+      function getPartiesByUser(uid) {
+          return $firebaseArray(firebaseDataService.users.child(uid).child('parties'));
       }
-      return parties;
-    }
 
-    function reset() {
-      if (parties) {
-        parties.$destroy();
-        parties = null;
-      }
-    }
+    
+    
+
+    
 
   }
 
